@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class InputControl : MonoBehaviour
 {
-    [SerializeField] private Vector2 move;
+    [SerializeField] private Vector2 move, direction;
     [SerializeField] private bool button1, button2, button3, button4, back;
     
     private string inputName;
@@ -109,6 +109,7 @@ public class InputControl : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         move = context.ReadValue<Vector2>();
+        direction = context.ReadValue<Vector2>();
     }
 
     // Bot?es pressionados no frame;
@@ -165,61 +166,61 @@ public class InputControl : MonoBehaviour
             canButton = false;
         }
 
-        if (move.x > 0 && move.y < 0 && canButton)
+        if (direction.x > 0 && direction.y < 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "\\V ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.x > 0 && move.y > 0 && canButton)
+        if (direction.x > 0 && direction.y > 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "/A ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.x < 0 && move.y < 0 && canButton)
+        if (direction.x < 0 && direction.y < 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "/V ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.x < 0 && move.y > 0 && canButton)
+        if (direction.x < 0 && direction.y > 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "\\A ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
 
-        if (move.x < 0 && move.y == 0 && canButton)
+        if (direction.x < 0 && direction.y == 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "< ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.x > 0 && move.y == 0 && canButton)
+        if (direction.x > 0 && direction.y == 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "> ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.y < 0 && move.x == 0 && canButton)
+        if (direction.y < 0 && direction.x == 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "V ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
-        if (move.y > 0 && move.x == 0 && canButton)
+        if (direction.y > 0 && direction.x == 0 && canButton)
         {
             StopAllCoroutines();
             codeButton += "A ";
-            move = Vector2.zero;
+            direction = Vector2.zero;
             canButton = false;
         }
 
@@ -248,6 +249,12 @@ public class InputControl : MonoBehaviour
     {
         get { return move; }
         set { move = value; }
+    }
+
+    public Vector2 Direction
+    {
+        get { return direction; }
+        set { direction = value; }
     }
 
     public bool Button1
