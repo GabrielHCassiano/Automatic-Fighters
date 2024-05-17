@@ -8,8 +8,7 @@ using System.Collections.Generic;
 public class InputControl : MonoBehaviour
 {
     [SerializeField] private Vector2 move, direction;
-    [SerializeField] private bool button1, button2, button3, button4, back;
-    
+    [SerializeField] private bool button1, button2, button3, button4, lt, lb, rt, rb, start, back, cancel;
     private string inputName;
 
     [Header("Buttons IDs Declarations")]
@@ -129,9 +128,33 @@ public class InputControl : MonoBehaviour
     {
         button4 = context.action.triggered;
     }
+    public void OnLT(InputAction.CallbackContext context)
+    {
+        lt = context.action.triggered;
+    }
+    public void OnLB(InputAction.CallbackContext context)
+    {
+        lb = context.action.triggered;
+    }
+    public void OnRT(InputAction.CallbackContext context)
+    {
+        rt = context.action.triggered;
+    }
+    public void OnRB(InputAction.CallbackContext context)
+    {
+        rb = context.action.triggered;
+    }
+    public void OnStart(InputAction.CallbackContext context)
+    {
+        start = context.action.triggered;
+    }
     public void OnBack(InputAction.CallbackContext context)
     {
         back = context.action.triggered;
+    }
+    public void OnCancel(InputAction.CallbackContext context)
+    {
+        cancel = context.action.triggered;
     }
 
     #endregion
@@ -150,6 +173,7 @@ public class InputControl : MonoBehaviour
 
     public void SetCodeButton()
     {
+
         if (button3 == true && canButton)
         {
             StopAllCoroutines();
@@ -281,6 +305,42 @@ public class InputControl : MonoBehaviour
         set { button4 = value; }
     }
 
+    public bool Lt
+    {
+        get { return lt; }
+        set { lt = value; }
+    }
+
+    public bool Lb
+    {
+        get { return lb; }
+        set { lb = value; }
+    }
+
+    public bool Rt
+    {
+        get { return rt; }
+        set { rt = value; }
+    }
+
+    public bool Rb
+    {
+        get { return rb; }
+        set { rb = value; }
+    }
+
+    public bool ButtonStart
+    {
+        get { return start; }
+        set { start = value; }
+    }
+
+    public bool Back
+    {
+        get { return back; }
+        set { back = value; }
+    }
+
     public string IdButton1
     {
         get { return idButton1; }
@@ -305,10 +365,10 @@ public class InputControl : MonoBehaviour
         set { idButton4 = value; }
     }
 
-    public bool Back
+    public bool Cancel
     {
-        get { return back; }
-        set { back = value; }
+        get { return cancel; }
+        set { cancel = value; }
     }
 
     public string CodeButton
