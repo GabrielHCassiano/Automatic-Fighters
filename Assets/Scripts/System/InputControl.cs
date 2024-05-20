@@ -4,11 +4,12 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XInput;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class InputControl : MonoBehaviour
 {
     [SerializeField] private Vector2 move, direction;
-    [SerializeField] private bool button1, button2, button3, button4, lt, lb, rt, rb, start, back, cancel;
+    [SerializeField] private bool button1, button2, heavyAttack, button3, lightAttack, button4, lt, lb, rt, rb, start, back, cancel;
     private string inputName;
 
     [Header("Buttons IDs Declarations")]
@@ -18,7 +19,7 @@ public class InputControl : MonoBehaviour
     [SerializeField] private List<string> nintendoIDs;
     [SerializeField] private List<string> genericIDs;
 
-    private string idButton1, idButton2, idButton3, idButton4;
+    private string idButton1, idButton2, idButton3, idButton4, idlt, idrt, idStart, idBack, idLeft, idRight, idSpecial;
 
     private bool canButton;
     [SerializeField] private string codeButton;
@@ -37,7 +38,7 @@ public class InputControl : MonoBehaviour
     void Update()
     {
         TyperInput();
-        GetCodeButton();
+        //GetCodeButton();
         SetCodeButton();
     }
 
@@ -52,6 +53,13 @@ public class InputControl : MonoBehaviour
                 idButton1 = keyboardIDs[1];
                 idButton2 = keyboardIDs[2];
                 idButton3 = keyboardIDs[3];
+                idlt = keyboardIDs[4];
+                idrt = keyboardIDs[5];
+                idStart = keyboardIDs[6];
+                idBack = keyboardIDs[7];
+                idLeft = keyboardIDs[8];
+                idRight = keyboardIDs[9];
+                idSpecial = keyboardIDs[10];
         }
         else if (playerInput.devices[0].description.manufacturer != "")
         {
@@ -63,6 +71,13 @@ public class InputControl : MonoBehaviour
                     idButton1 = playstationIDs[1];
                     idButton2 = playstationIDs[2];
                     idButton3 = playstationIDs[3];
+                    idlt = playstationIDs[4];
+                    idrt = playstationIDs[5];
+                    idStart = playstationIDs[6];
+                    idBack = playstationIDs[7];
+                    idLeft = playstationIDs[8];
+                    idRight = playstationIDs[9];
+                    idSpecial = playstationIDs[10];
                     break;
                 case "Nintendo":
                     inputName = "Nintendo";
@@ -70,6 +85,13 @@ public class InputControl : MonoBehaviour
                     idButton1 = nintendoIDs[1];
                     idButton2 = nintendoIDs[2];
                     idButton3 = nintendoIDs[3];
+                    idlt = nintendoIDs[4];
+                    idrt = nintendoIDs[5];
+                    idStart = nintendoIDs[6];
+                    idBack = nintendoIDs[7];
+                    idLeft = nintendoIDs[8];
+                    idRight = nintendoIDs[9];
+                    idSpecial = nintendoIDs[10];
                     break;
                 default:
                     inputName = "Generic";
@@ -77,10 +99,17 @@ public class InputControl : MonoBehaviour
                     idButton1 = genericIDs[1];
                     idButton2 = genericIDs[2];
                     idButton3 = genericIDs[3];
+                    idlt = genericIDs[4];
+                    idrt = genericIDs[5];
+                    idStart = genericIDs[6];
+                    idBack = genericIDs[7];
+                    idLeft = genericIDs[8];
+                    idRight = genericIDs[9];
+                    idSpecial = genericIDs[10];
                     break;
             }
         }
-        else // os controles do xbox n tem a empresa que fez eles, KKKKKKKKKKKKKKKKKKKKKKK
+        else
         {
             if (playerInput.devices[0] is XInputController)
             {
@@ -89,6 +118,13 @@ public class InputControl : MonoBehaviour
                 idButton1 = xboxIDs[1];
                 idButton2 = xboxIDs[2];
                 idButton3 = xboxIDs[3];
+                idlt = xboxIDs[4];
+                idrt = xboxIDs[5];
+                idStart = xboxIDs[6];
+                idBack = xboxIDs[7];
+                idLeft = xboxIDs[8];
+                idRight = xboxIDs[9];
+                idSpecial = xboxIDs[10];
             }
             else
             {
@@ -97,6 +133,13 @@ public class InputControl : MonoBehaviour
                 idButton1 = playstationIDs[1];
                 idButton2 = playstationIDs[2];
                 idButton3 = playstationIDs[3];
+                idlt = playstationIDs[4];
+                idrt = playstationIDs[5];
+                idStart = playstationIDs[6];
+                idBack = playstationIDs[7];
+                idLeft = playstationIDs[8];
+                idRight = playstationIDs[9];
+                idSpecial = playstationIDs[10];
             }
         }
     }
@@ -119,10 +162,12 @@ public class InputControl : MonoBehaviour
     public void OnButton2(InputAction.CallbackContext context)
     {
         button2 = context.action.triggered;
+        heavyAttack = context.action.triggered;
     }
     public void OnButton3(InputAction.CallbackContext context)
     {
         button3 = context.action.triggered;
+        lightAttack = context.action.triggered;
     }
     public void OnButton4(InputAction.CallbackContext context)
     {
@@ -257,7 +302,7 @@ public class InputControl : MonoBehaviour
 
     public IEnumerator ButtonDelay()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.08f);
         canButton = true;
     }
 
@@ -292,11 +337,22 @@ public class InputControl : MonoBehaviour
         get { return button2; }
         set { button2 = value; }
     }
+    public bool HeavyAttack
+    {
+        get { return heavyAttack; }
+        set { heavyAttack = value; }
+    }
 
     public bool Button3
     {
         get { return button3; }
         set { button3 = value; }
+    }
+
+    public bool LightAttack
+    {
+        get { return lightAttack; }
+        set { lightAttack = value; }
     }
 
     public bool Button4
@@ -363,6 +419,46 @@ public class InputControl : MonoBehaviour
     {
         get { return idButton4; }
         set { idButton4 = value; }
+    }
+
+    public string IdLT
+    {
+        get { return idlt; }
+        set { idlt = value; }
+    }
+
+    public string IdRT
+    {
+        get { return idrt; }
+        set { idrt = value; }
+    }
+    public string IdStart
+    {
+        get { return idStart; }
+        set { idStart = value; }
+    }
+
+    public string IdBack
+    {
+        get { return idBack; }
+        set { idBack = value; }
+    }
+
+    public string IdLeft
+    {
+        get { return idLeft; }
+        set { idLeft = value; }
+    }
+    public string IdRight
+    {
+        get { return idRight; }
+        set { idRight = value; }
+    }
+
+    public string IdSpecial
+    {
+        get { return idSpecial; }
+        set { idSpecial = value; }
     }
 
     public bool Cancel

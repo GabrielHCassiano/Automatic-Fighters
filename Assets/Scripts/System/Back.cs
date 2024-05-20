@@ -16,10 +16,10 @@ public class Back : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<InputControl>() != null && FindObjectOfType<InputControl>().Back == true)
+        if (FindObjectOfType<InputControl>() != null && FindObjectOfType<InputControl>().Cancel == true)
         {
             backButton.onClick.Invoke();
-            FindObjectOfType<InputControl>().Back = false;
+            FindObjectOfType<InputControl>().Cancel = false;
         }
     }
 }

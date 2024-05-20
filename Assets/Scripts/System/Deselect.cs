@@ -22,6 +22,6 @@ public class Deselect : MonoBehaviour, IDeselectHandler
     public void OnDeselect(BaseEventData eventData)
     {
         back.enabled = true;
-        FindObjectOfType<InputControl>().Back = false;
+        FindObjectOfType<InputControl>().Cancel = false;
     }
 }

@@ -19,7 +19,13 @@ public class Settings : MonoBehaviour
     [SerializeField] private TMP_Dropdown dropQuality;
 
     private InputControl inputControl;
-    [SerializeField] private TextMeshProUGUI textInput;
+    [SerializeField] private TextMeshProUGUI inputConfirm;
+    [SerializeField] private TextMeshProUGUI inputBack;
+
+    [SerializeField] private TextMeshProUGUI coins;
+    [SerializeField] private TextMeshProUGUI bonus1;
+    [SerializeField] private TextMeshProUGUI bonus2;
+
 
     void Start()
     {
@@ -29,6 +35,10 @@ public class Settings : MonoBehaviour
         toggle.isOn = PlayerPrefs.GetInt("Full") != 1;
         dropResulution.value = PlayerPrefs.GetInt("Resolution");
         dropQuality.value = PlayerPrefs.GetInt("Quality", 2);
+
+        coins.text = PlayerPrefs.GetInt("Coins", 0).ToString();
+        bonus1.text = PlayerPrefs.GetInt("Bonus1", 0).ToString();
+        bonus2.text = PlayerPrefs.GetInt("Bonus2", 0).ToString();
     }
 
     private void Update()
@@ -54,9 +64,9 @@ public class Settings : MonoBehaviour
             return;
         }
 
-        print("vai");
+        inputConfirm.text = "<size=64><sprite=" + inputControl.IdButton3 + "></size><size=64><sprite=" + inputControl.IdStart + "></size>";
+        inputBack.text = "<size=64><sprite=" + inputControl.IdButton2 + "></size><size=64><sprite=" + inputControl.IdBack + "></size>";
 
-        textInput.text = "para confirmar <size=36><sprite=" + inputControl.IdButton3 + "></size> para voltar <size=36><sprite=" + inputControl.IdButton2 + "></size>";
     }
 
     public void SetMaster(float volume)

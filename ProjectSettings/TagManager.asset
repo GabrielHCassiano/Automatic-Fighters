@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Gravity
+  - Block
+  - Coca
+  - Coin
+  - Bonus1
+  - Bonus2
   layers:
   - Default
   - TransparentFX
@@ -13,11 +19,11 @@ TagManager:
   - Water
   - UI
   - Hitbox
-  - Hurtbox
-  - 
-  - 
-  - 
-  - 
+  - PlayerHurtbox
+  - HitboxDefese
+  - EnemyHurtbox
+  - Gravity
+  - Block
   - 
   - 
   - 
@@ -50,6 +56,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3907356055
+    locked: 0
+  - name: Effects
+    uniqueID: 3146880583
     locked: 0
   - name: UI
     uniqueID: 3130850593

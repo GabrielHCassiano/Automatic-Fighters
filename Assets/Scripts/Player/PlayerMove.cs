@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Collections.AllocatorManager;
 using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerMove : MonoBehaviour
@@ -59,6 +60,10 @@ public class PlayerMove : MonoBehaviour
         set { canMove = value; }
     }
 
+    public void OffMove()
+    {
+        canMove = false;
+    }
     public bool OnGround()
     {
         return Physics2D.BoxCast(checkGround.position, new Vector2(0.1f, 0.1f), 0, Vector2.down, LayerMask.GetMask("Ground"));
@@ -84,7 +89,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (canMove && !playerCombat.InAttack && !playerCombat.InStun)
+        if (canMove && !playerCombat.InAttack && !playerCombat.InBlock && !playerCombat.EnterBlock && !playerCombat.InStun)
         {
             if (inputControl.Move.x == 0)
                 canRun = false;
@@ -93,9 +98,27 @@ public class PlayerMove : MonoBehaviour
                 canRun = true;
 
             if (canRun == true)
-                rb.velocity = new Vector2(inputControl.Move.x * 5, rb.velocity.y);
+                rb.velocity = new Vector2(inputControl.Move.x * 6, rb.velocity.y);
             else if (canRun == false)
                 rb.velocity = new Vector2(inputControl.Move.x * 3, rb.velocity.y);
+        }
+    }
+
+    public void HitMove(bool directionRight, Collider2D collider)
+    {
+        if (playerCombat.InBlock)
+        {
+            if (directionRight == true)
+                rb.velocity = new Vector2(2f, rb.velocity.y);
+            else
+                rb.velocity = new Vector2(-2f, rb.velocity.y);
+        }
+        else
+        {
+            if (directionRight == true)
+                rb.velocity = new Vector2(10f, rb.velocity.y);
+            else
+                rb.velocity = new Vector2(-10f, rb.velocity.y);
         }
     }
 
