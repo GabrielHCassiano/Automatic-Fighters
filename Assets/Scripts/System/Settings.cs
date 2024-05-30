@@ -25,6 +25,7 @@ public class Settings : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private TextMeshProUGUI bonus1;
     [SerializeField] private TextMeshProUGUI bonus2;
+    [SerializeField] private TextMeshProUGUI score;
 
 
     void Start()
@@ -36,9 +37,13 @@ public class Settings : MonoBehaviour
         dropResulution.value = PlayerPrefs.GetInt("Resolution");
         dropQuality.value = PlayerPrefs.GetInt("Quality", 2);
 
-        coins.text = PlayerPrefs.GetInt("Coins", 0).ToString();
-        bonus1.text = PlayerPrefs.GetInt("Bonus1", 0).ToString();
-        bonus2.text = PlayerPrefs.GetInt("Bonus2", 0).ToString();
+        if (coins != null)
+        {
+            coins.text = PlayerPrefs.GetInt("Coins", 0).ToString();
+            bonus1.text = PlayerPrefs.GetInt("Bonus1", 0).ToString();
+            bonus2.text = PlayerPrefs.GetInt("Bonus2", 0).ToString();
+            score.text = PlayerPrefs.GetInt("Score", 0).ToString();
+        }
     }
 
     private void Update()
@@ -54,6 +59,11 @@ public class Settings : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void BackMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
     public void SetInputSprite()

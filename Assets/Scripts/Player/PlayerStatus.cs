@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,6 +30,10 @@ public class PlayerStatus : MonoBehaviour
     private int bonus1 = 0;
     private int bonus2 = 0;
 
+    [SerializeField] private TextMeshProUGUI textScore;
+    private int score = 0;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +44,7 @@ public class PlayerStatus : MonoBehaviour
         coins = PlayerPrefs.GetInt("Coins" , 0);
         bonus1 = PlayerPrefs.GetInt("Bonus1", 0);
         bonus2 = PlayerPrefs.GetInt("Bonus2", 0);
+        score = 0;
     }
 
     // Update is called once per frame
@@ -53,6 +59,7 @@ public class PlayerStatus : MonoBehaviour
     {
         textCoins.text = coins.ToString();
         textItemQ.text = itemQ.ToString();
+        textScore.text = score.ToString();
 
         if (itemQ > 0)
             item.gameObject.SetActive(true);
@@ -77,8 +84,17 @@ public class PlayerStatus : MonoBehaviour
             PlayerPrefs.SetInt("Coins", coins);
             PlayerPrefs.SetInt("Bonus1", bonus1);
             PlayerPrefs.SetInt("Bonus2", bonus2);
+            if (score > PlayerPrefs.GetInt("Score"))
+                PlayerPrefs.SetInt("Score", score);
             SceneManager.LoadScene("Menu");
         }
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("Coins", coins);
+        PlayerPrefs.SetInt("Bonus1", bonus1);
+        PlayerPrefs.SetInt("Bonus2", bonus2);
     }
 
     public void Damage(EnemyStatus enemyStatus, Collider2D collider)
@@ -138,6 +154,12 @@ public class PlayerStatus : MonoBehaviour
     {
         get { return bonus2; }
         set { bonus2 = value; }
+    }
+
+    public int Score
+    {
+        get { return score; }
+        set { score = value; }
     }
 
     public int ItemQ

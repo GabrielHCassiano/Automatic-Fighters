@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.PlasticSCM.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -52,12 +53,14 @@ public class EnemyStatus : MonoBehaviour
             }
 
             int randomBonus = Random.Range(0, 51);
-            if (randomBonus >= 40 && randomBonus < 45)
+            if (randomBonus >= 30 && randomBonus < 45)
                 Instantiate(coca, transform.position + new Vector3(0, 0.4f, 0), transform.rotation);
             if (randomBonus >= 45 && randomBonus <= 49)
                 Instantiate(bonus1, transform.position + new Vector3(0, 0.4f, 0), transform.rotation);
             if (randomBonus == 50)
                 Instantiate(bonus2, transform.position + new Vector3(0, 0.4f, 0), transform.rotation);
+
+            FindObjectOfType<PlayerStatus>().Score += 1;
 
             SpawnEnemy.Instance.EnemyQ -= 1;
 
