@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Gravity
-  - Block
-  - Coca
-  - Coin
-  - Bonus1
-  - Bonus2
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -18,12 +11,12 @@ TagManager:
   - 
   - Water
   - UI
-  - Hitbox
-  - PlayerHurtbox
-  - HitboxDefese
-  - EnemyHurtbox
-  - Gravity
-  - Block
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -48,18 +41,36 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: BackGround
-    uniqueID: 524272351
-    locked: 0
-  - name: ForeGround
-    uniqueID: 1731081365
-    locked: 0
-  - name: Player
-    uniqueID: 3907356055
-    locked: 0
-  - name: Effects
-    uniqueID: 3146880583
-    locked: 0
-  - name: UI
-    uniqueID: 3130850593
-    locked: 0
+  m_RenderingLayers:
+  - Default
+  - Light Layer 1
+  - Light Layer 2
+  - Light Layer 3
+  - Light Layer 4
+  - Light Layer 5
+  - Light Layer 6
+  - Light Layer 7
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
