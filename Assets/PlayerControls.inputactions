@@ -261,11 +261,33 @@
                 },
                 {
                     "name": "",
+                    "id": "d9a144d6-3422-4280-a92b-bc317d415925",
+                    "path": "<HID::Microntek              USB Joystick          >/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick1",
+                    "action": "Green",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "49a203e7-ab78-4fe6-8881-15f96a12f631",
                     "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
+                    "action": "Blue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "faccf796-295c-47ad-98bf-1c6e3e0ee9b3",
+                    "path": "<HID::Microntek              USB Joystick          >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick1",
                     "action": "Blue",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -283,11 +305,33 @@
                 },
                 {
                     "name": "",
+                    "id": "0038e677-fc94-4f4e-b063-c676418101b2",
+                    "path": "<HID::Microntek              USB Joystick          >/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick1",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8e4f1566-bd78-48ef-9029-1ec6c7562ea2",
-                    "path": "<Keyboard>/i",
+                    "path": "<Keyboard>/u",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
+                    "action": "Power",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8571965-ef15-4b25-8ac3-164bb4c09360",
+                    "path": "<HID::Microntek              USB Joystick          >/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick1",
                     "action": "Power",
                     "isComposite": false,
                     "isPartOfComposite": false
