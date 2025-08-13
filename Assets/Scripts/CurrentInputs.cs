@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CurrentInputs : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI inputCurrentText;
-    [SerializeField] private string inputCurrent = "";
+    [SerializeField] private TextMeshProUGUI[] inputCurrentText;
+    [SerializeField] private string[] inputCurrent;
 
     [SerializeField] private TextMeshProUGUI inputSpriteCurrentText;
     [SerializeField] private string inputSpriteCurrent = "";
@@ -24,22 +24,25 @@ public class CurrentInputs : MonoBehaviour
 
     public void CurrentInput()
     {
-        inputCurrentText.text = inputCurrent;
-        inputSpriteCurrentText.text = inputSpriteCurrent;
-
-        if (inputCurrent != "")
+        for (int i = 0; i < inputCurrent.Length; i++)
         {
-            StartCoroutine(CooldownInput());
+            inputCurrentText[i].text = inputCurrent[i];
+            //inputSpriteCurrentText.text = inputSpriteCurrent;
+
+            /*if (inputCurrent[0] != "")
+            {
+                StartCoroutine(CooldownInput());
+            }*/
         }
     }
     public IEnumerator CooldownInput()
     {
         yield return new WaitForSeconds(0.7f);
-        inputSpriteCurrent = "";
-        inputCurrent = "";
+        //inputSpriteCurrent = "";
+        inputCurrent[0] = "";
     }
 
-    public string InputCurrent
+    public string[] InputCurrent
     { 
         get { return inputCurrent; }
         set { inputCurrent = value; }

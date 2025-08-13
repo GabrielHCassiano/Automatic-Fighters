@@ -3,12 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
+using UnityEngine.U2D;
 
 public class InputsControl : MonoBehaviour
 {
 
     [SerializeField] private Vector2 directionInput;
-    [SerializeField] private bool redInput, greenInput, blueInput, powerInput, blockInput;
+    [SerializeField] private bool lowInput, mediumInput, heavyInput, shadowInput, powerInput, blockInput;
 
     [SerializeField] private bool canDirectionUpLeft, canDirectionUpRight, canDirectionDownLeft, canDirectionDownRight,
         canDirectionUp, canDirectionDown, canDirectionLeft, canDirectionRight,
@@ -17,6 +18,11 @@ public class InputsControl : MonoBehaviour
     private bool inMultipleInputs, inBlackAndWhite;
 
     private CurrentInputs currentInputs;
+    private string currentInput = "";
+    private string currentSpriteInput = "";
+    private string currentInput2 = "";
+    private string currentSpriteInput2 = "";
+    private int countInput = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,399 +38,315 @@ public class InputsControl : MonoBehaviour
 
     public void InputCurrent()
     {
-        if (directionInput.y > 0 && directionInput.x < 0 && canDirectionUpLeft)  
+        /*if (Input.GetKeyDown(KeyCode.C))
         {
-            currentInputs.StopAllCoroutines();
-            canDirectionUpLeft = false;
-            StartCoroutine(CooldownPositve("UpLeft"));
+            print("ok");
+            for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+            {
+                print("ok " + i);
+                currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+            }
+        }*/
+
+        if (countInput <= 20)
+        {
+            currentInputs.InputCurrent[0] = currentSpriteInput + "\t\t" + countInput;
+
+            countInput++;
         }
 
-        if (directionInput.y > 0 && directionInput.x > 0 && canDirectionUpRight)
+        if (directionInput.y > 0 && directionInput.x < 0 && currentInput != "UpLeft")
         {
-            currentInputs.StopAllCoroutines();
-            canDirectionUpRight = false;
-            StartCoroutine(CooldownPositve("UpRight"));
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "UpLeft";
+            currentSpriteInput = "<sprite=16>";
+        }
+        else if (directionInput.y > 0 && directionInput.x > 0 && currentInput != "UpRight")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "UpRight";
+            currentSpriteInput = "<sprite=17>";
+        }
+        else if (directionInput.y < 0 && directionInput.x < 0 && currentInput != "DownLeft")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "DownLeft";
+            currentSpriteInput = "<sprite=18>";
+        }
+        else if (directionInput.y < 0 && directionInput.x > 0 && currentInput != "DownRight")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "DownRight";
+            currentSpriteInput = "<sprite=19>";
+        }
+        else if (directionInput.y > 0 && directionInput.x == 0 && currentInput != "Up")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Up";
+            currentSpriteInput = "<sprite=24>";
+        }
+        else if (directionInput.y < 0 && directionInput.x == 0 && currentInput != "Down")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Down";
+            currentSpriteInput = "<sprite=25>";
+        }
+        else if (directionInput.x < 0 && directionInput.y == 0 && currentInput != "Left")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Left";
+            currentSpriteInput = "<sprite=26>";
+        }
+        else if (directionInput.x > 0 && directionInput.y == 0 && currentInput != "Right")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Right";
+            currentSpriteInput = "<sprite=27>";
+        }
+        else if (lowInput && mediumInput && heavyInput && currentInput != "BlackAndWhite")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "BlackAndWhite";
+            currentSpriteInput = "<sprite=13>";
+        }
+        else if (!lowInput && mediumInput && heavyInput && currentInput != "Cyan")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Cyan";
+            currentSpriteInput = "<sprite=6>";
+        }
+        else if (lowInput && !mediumInput && heavyInput && currentInput != "Magenta")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Magenta";
+            currentSpriteInput = "<sprite=8>";
+        }
+        else if (lowInput && mediumInput && !heavyInput && currentInput != "Yellow")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Yellow";
+            currentSpriteInput = "<sprite=10>";
+        }
+        else if (lowInput && !mediumInput && !heavyInput && currentInput != "Low")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Low";
+            currentSpriteInput = "<sprite=0>";
+        }
+        else if (mediumInput && !lowInput && !heavyInput && currentInput != "Medium")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Medium";
+            currentSpriteInput = "<sprite=2>";
+        }
+        else if (heavyInput && !lowInput && !mediumInput && currentInput != "Heavy")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Heavy";
+            currentSpriteInput = "<sprite=4>";
+        }
+        else if (shadowInput && currentInput != "Shadow")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Shadow";
+            currentSpriteInput = "<sprite=12>";
+        }
+        else if (powerInput && currentInput != "Power")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Power";
+            currentSpriteInput = "<sprite=14>";
+        }
+        else if (BlockInput && currentInput != "Block")
+        {
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "Block";
+            currentSpriteInput = "<sprite=15>";
         }
 
-        if (directionInput.y < 0 && directionInput.x < 0 && canDirectionDownLeft)
+        else if (directionInput.x == 0 && directionInput.y == 0 && !lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && currentInput != "")
         {
-            currentInputs.StopAllCoroutines();
-            canDirectionDownLeft = false;
-            StartCoroutine(CooldownPositve("DownLeft"));
+            countInput = 0;
+
+            if (countInput == 0)
+            {
+
+                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+                {
+                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+                }
+            }
+
+            currentInput = "";
+            currentSpriteInput = "";
+
         }
 
-        if (directionInput.y < 0 && directionInput.x > 0 && canDirectionDownRight)
-        {
-            currentInputs.StopAllCoroutines();
-            canDirectionDownRight = false;
-            StartCoroutine(CooldownPositve("DownRight"));
-        }
-
-        if (directionInput.y > 0 && directionInput.x == 0 && canDirectionUp)
-        {
-            currentInputs.StopAllCoroutines();
-            canDirectionUp = false;
-            StartCoroutine(CooldownPositve("Up"));
-        }
-
-        if (directionInput.y < 0 && directionInput.x == 0 && canDirectionDown)
-        {
-            currentInputs.StopAllCoroutines();
-            canDirectionDown = false;
-            StartCoroutine(CooldownPositve("Down"));
-        }
-
-        if (directionInput.x < 0 && directionInput.y == 0 && canDirectionLeft)
-        {
-            currentInputs.StopAllCoroutines();
-            canDirectionLeft = false;
-            StartCoroutine(CooldownPositve("Left"));
-        }
-
-        if (directionInput.x > 0 && directionInput.y == 0 && canDirectionRight)
-        {
-            currentInputs.StopAllCoroutines();
-            canDirectionRight = false;
-            StartCoroutine(CooldownPositve("Right"));
-        }
-
-        if (redInput && greenInput && blueInput && canBlackAndWhite)
-        {
-            currentInputs.StopAllCoroutines();
-            inBlackAndWhite = true;
-            canBlackAndWhite = false;
-            canRed = false;
-            canGreen = false;
-            canBlue = false;
-            canCyan = false;
-            canMagenta = false;
-            canYellow = false;
-            StartCoroutine(CooldownPositve("BlackAndWhite"));
-        }
-
-        if (!redInput && greenInput && blueInput && canCyan)
-        {
-            currentInputs.StopAllCoroutines();
-            inMultipleInputs = true;
-            canCyan = false;
-            canGreen = false;
-            canBlue = false;
-            StartCoroutine(CooldownPositve("Cyan"));
-        }
-
-        if (redInput && !greenInput && blueInput && canMagenta)
-        {
-            currentInputs.StopAllCoroutines();
-            inMultipleInputs = true;
-            canMagenta = false;
-            canRed = false;
-            canBlue = false;
-            StartCoroutine(CooldownPositve("Magenta"));
-        }
-
-        if (redInput && greenInput && !blueInput && canYellow)
-        {
-            currentInputs.StopAllCoroutines();
-            inMultipleInputs = true;
-            canYellow = false;
-            canRed = false;
-            canGreen = false;
-            StartCoroutine(CooldownPositve("Yellow"));
-        }
-
-        if (redInput && !greenInput && !blueInput && canRed)
-        {
-            currentInputs.StopAllCoroutines();
-            canRed = false;
-            StartCoroutine(CooldownPositve("Red"));
-        }
-
-        if (greenInput && !redInput && !blueInput && canGreen)
-        {
-            currentInputs.StopAllCoroutines();
-            canGreen = false;
-            StartCoroutine(CooldownPositve("Green"));
-        }
-
-        if (blueInput && !redInput && !greenInput && canBlue)
-        {
-            currentInputs.StopAllCoroutines();
-            canBlue = false;
-            StartCoroutine(CooldownPositve("Blue"));
-        }
-
-        if (powerInput && canPower)
-        {
-            currentInputs.StopAllCoroutines();
-            canPower = false;
-            StartCoroutine(CooldownPositve("Power"));
-        }
-
-        if (BlockInput && canBlock)
-        {
-            currentInputs.StopAllCoroutines();
-            canBlock = false;
-            StartCoroutine(CooldownPositve("Block"));
-        }
     }
 
-    public IEnumerator CooldownPositve(string typerInput)
-    {
-        yield return new WaitForSeconds(0.15f);
-
-        switch (typerInput)
-        {
-            case "UpLeft":
-
-                if (directionInput.y > 0 && directionInput.x < 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=20>";
-                    currentInputs.InputCurrent += " +UpLeft";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=16>";
-                    currentInputs.InputCurrent += " UpLeft";
-                }
-
-                break;
-
-            case "UpRight":
-
-                if (directionInput.y > 0 && directionInput.x > 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=21>";
-                    currentInputs.InputCurrent += " +UpRight";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=17>";
-                    currentInputs.InputCurrent += " UpRight";
-                }
-
-                break;
-
-            case "DownLeft":
-
-                if (directionInput.y < 0 && directionInput.x < 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=22>";
-                    currentInputs.InputCurrent += " +DownLeft";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=18>";
-                    currentInputs.InputCurrent += " DownLeft";
-                }
-
-                break;
-
-            case "DownRight":
-
-                if (directionInput.y < 0 && directionInput.x > 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=23>";
-                    currentInputs.InputCurrent += " +DownRight";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=19>";
-                    currentInputs.InputCurrent += " DownRight";
-                }
-
-                break;
-
-            case "Up": 
-
-                if (directionInput.y > 0 && directionInput.x == 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=28>";
-                    currentInputs.InputCurrent += " +Up";
-                }
-                else 
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=24>";
-                    currentInputs.InputCurrent += " Up";
-                }
-
-                break;
-
-            case "Down":
-
-                if (directionInput.y < 0 && directionInput.x == 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=29>";
-                    currentInputs.InputCurrent += " +Down";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=25>";
-                    currentInputs.InputCurrent += " Down";
-                }
-
-                break;
-
-            case "Left":
-
-                if (directionInput.x < 0 && directionInput.y == 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=30>";
-                    currentInputs.InputCurrent += " +Left";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=26>";
-                    currentInputs.InputCurrent += " Left";
-                }
-
-
-                break;
-
-            case "Right":
-
-                if (directionInput.x > 0 && directionInput.y == 0)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=31>";
-                    currentInputs.InputCurrent += " +Right";
-                }
-                else 
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=27>";
-                    currentInputs.InputCurrent += " Right";
-                }
-
-                break;
-
-            case "BlackAndWhite":
-
-                if (redInput && greenInput && blueInput)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=13>";
-                    currentInputs.InputCurrent += " White";
-                }
-                else
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=12>";
-                    currentInputs.InputCurrent += " Black";
-                }
-
-                inBlackAndWhite = false;
-
-                break;
-
-            case "Cyan":
-
-                if (greenInput && blueInput && !redInput && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=7>";
-                    currentInputs.InputCurrent += " +Cyan";
-                }
-                else if (!inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=6>";
-                    currentInputs.InputCurrent += " Cyan";
-                }
-
-                inMultipleInputs = false;
-
-                break;
-
-            case "Magenta":
-
-                if (redInput && blueInput && !greenInput && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=9>";
-                    currentInputs.InputCurrent += " +Magenta";
-                }
-                else if (!inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=8>";
-                    currentInputs.InputCurrent += " Magenta";
-                }
-
-                inMultipleInputs = false;
-
-                break;
-
-            case "Yellow":
-
-                if (redInput && greenInput && !blueInput && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=11>";
-                    currentInputs.InputCurrent += " +Yellow";
-                }
-                else if (!inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=10>";
-                    currentInputs.InputCurrent += " Yellow";
-                }
-
-                inMultipleInputs = false;
-
-                break;
-
-            case "Red":
-
-                if (redInput && !greenInput && !blueInput && !inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=1>";
-                    currentInputs.InputCurrent += " +Red";
-                }
-                else if (!inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=0>";
-                    currentInputs.InputCurrent += " Red";
-                }
-
-                break;
-
-            case "Green":
-
-                if (greenInput && !redInput && !blueInput && !inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=3>";
-                    currentInputs.InputCurrent += " +Green";
-                }
-                else if (!inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=2>";
-                    currentInputs.InputCurrent += " Green";
-                }     
-
-                break;
-
-            case "Blue":
-
-                if (blueInput && !redInput && !greenInput && !inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=5>";
-                    currentInputs.InputCurrent += " +Blue";
-                }
-                else if (!inMultipleInputs && !inBlackAndWhite)
-                {
-                    currentInputs.InputSpriteCurrent += " <sprite=4>";
-                    currentInputs.InputCurrent += " Blue";
-                }
-
-                break;
-
-            case "Power":
-
-                currentInputs.InputSpriteCurrent += " <sprite=14>";
-                currentInputs.InputCurrent += " Power";
-
-                break;
-
-            case "Block":
-
-                currentInputs.InputSpriteCurrent += " <sprite=15>";
-                currentInputs.InputCurrent += " Block";
-
-                break;
-        }
-    }
-
-    #region GetInputs (Callback)
+        #region GetInputs (Callback)
 
     public void GetDirectionInput(InputAction.CallbackContext callbackContext)
     {
@@ -443,7 +365,7 @@ public class InputsControl : MonoBehaviour
 
         }
     }
-    public void GetRedInput(InputAction.CallbackContext callbackContext)
+    /*public void GetRedInput(InputAction.CallbackContext callbackContext)
     {
         redInput = callbackContext.action.triggered;
 
@@ -507,6 +429,36 @@ public class InputsControl : MonoBehaviour
 
         if (!blockInput)
             canBlock = true;
+    }*/
+
+    public void GetLowInput(InputAction.CallbackContext callbackContext)
+    {
+        lowInput = callbackContext.action.triggered;
+    }
+
+    public void GetMediumInput(InputAction.CallbackContext callbackContext)
+    {
+        mediumInput = callbackContext.action.triggered;
+    }
+
+    public void GetHeavyInput(InputAction.CallbackContext callbackContext)
+    {
+        heavyInput = callbackContext.action.triggered;
+    }
+
+    public void GetShadowInput(InputAction.CallbackContext callbackContext)
+    {
+        shadowInput = callbackContext.action.triggered;
+    }
+
+    public void GetPowerInput(InputAction.CallbackContext callbackContext)
+    {
+        powerInput = callbackContext.action.triggered;
+    }
+
+    public void GetBlockInput(InputAction.CallbackContext callbackContext)
+    {
+        blockInput = callbackContext.action.triggered;
     }
 
     #endregion
@@ -519,22 +471,28 @@ public class InputsControl : MonoBehaviour
         set { directionInput = value; }
     }
 
-    public bool RedInput
+    public bool LowInput
     {
-        get { return redInput; }
-        set { redInput = value; }
+        get { return lowInput; }
+        set { lowInput = value; }
     }
 
-    public bool GreenInput
+    public bool MediumInput
     {
-        get { return greenInput; }
-        set { greenInput = value; }
+        get { return mediumInput; }
+        set { mediumInput = value; }
     }
 
-    public bool BlueInput
+    public bool HeavyInput
     {
-        get { return blueInput; }
-        set { blueInput = value; }
+        get { return heavyInput; }
+        set { heavyInput = value; }
+    }
+
+    public bool ShadowInput
+    {
+        get { return shadowInput; }
+        set { shadowInput = value; }
     }
 
     public bool PowerInput
