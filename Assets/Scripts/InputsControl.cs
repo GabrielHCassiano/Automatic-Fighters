@@ -50,132 +50,44 @@ public class InputsControl : MonoBehaviour
 
         if (countInput <= 20)
         {
-            currentInputs.InputCurrent[0] = currentSpriteInput + "\t\t" + countInput;
+            currentInputs.InputCurrent[0] = currentSpriteInput + currentSpriteInput2 + "\t\t" + countInput;
 
             countInput++;
         }
 
         if (directionInput.y > 0 && directionInput.x < 0 && currentInput != "UpLeft")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "UpLeft";
-            currentSpriteInput = "<sprite=16>";
+            CurrentInputLogic("UpLeft", "<sprite=16>");
         }
         else if (directionInput.y > 0 && directionInput.x > 0 && currentInput != "UpRight")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "UpRight";
-            currentSpriteInput = "<sprite=17>";
+            CurrentInputLogic("UpRight", "<sprite=17>");
         }
         else if (directionInput.y < 0 && directionInput.x < 0 && currentInput != "DownLeft")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "DownLeft";
-            currentSpriteInput = "<sprite=18>";
+            CurrentInputLogic("DownLeft", "<sprite=18>");
         }
         else if (directionInput.y < 0 && directionInput.x > 0 && currentInput != "DownRight")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "DownRight";
-            currentSpriteInput = "<sprite=19>";
+            CurrentInputLogic("DownRight", "<sprite=19>");
         }
         else if (directionInput.y > 0 && directionInput.x == 0 && currentInput != "Up")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Up";
-            currentSpriteInput = "<sprite=24>";
+            CurrentInputLogic("Up", "<sprite=24>");
         }
         else if (directionInput.y < 0 && directionInput.x == 0 && currentInput != "Down")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Down";
-            currentSpriteInput = "<sprite=25>";
+            CurrentInputLogic("Down", "<sprite=25>");
         }
         else if (directionInput.x < 0 && directionInput.y == 0 && currentInput != "Left")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Left";
-            currentSpriteInput = "<sprite=26>";
+            CurrentInputLogic("Left", "<sprite=26>");
         }
         else if (directionInput.x > 0 && directionInput.y == 0 && currentInput != "Right")
         {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Right";
-            currentSpriteInput = "<sprite=27>";
+            CurrentInputLogic("Right", "<sprite=27>");
         }
-        else if (lowInput && mediumInput && heavyInput && currentInput != "BlackAndWhite")
+        /*else if (lowInput && mediumInput && heavyInput && currentInput != "BlackAndWhite")
         {
             countInput = 0;
 
@@ -325,28 +237,101 @@ public class InputsControl : MonoBehaviour
             currentInput = "Block";
             currentSpriteInput = "<sprite=15>";
         }
-
+        */
         else if (directionInput.x == 0 && directionInput.y == 0 && !lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && currentInput != "")
         {
-            countInput = 0;
+            CurrentInputLogic("", "");
+        }
 
-            if (countInput == 0)
-            {
+        test2();
 
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
+    }
 
-            currentInput = "";
-            currentSpriteInput = "";
+    public void test2()
+    {
+        if (lowInput && mediumInput && heavyInput && currentInput2 != "BlackAndWhite")
+        {
+            CurrentInputLogic2("BlackAndWhite", "<sprite=13");
+        }
+        else if (!lowInput && mediumInput && heavyInput && currentInput2 != "Cyan")
+        {
+            CurrentInputLogic2("Cyan", "<sprite=6>");
+        }
+        else if (lowInput && !mediumInput && heavyInput && currentInput2 != "Magenta")
+        {
+            CurrentInputLogic2("Magenta", "<sprite=8>");
+        }
+        else if (lowInput && mediumInput && !heavyInput && currentInput2 != "Yellow")
+        {
+            CurrentInputLogic2("Yellow", "<sprite=10>");
+        }
+        else if (lowInput && !mediumInput && !heavyInput && currentInput2 != "Low")
+        {
+            CurrentInputLogic2("Low", "<sprite=0>");
+        }
+        else if (mediumInput && !lowInput && !heavyInput && currentInput2 != "Medium")
+        {
+            CurrentInputLogic2("Medium", "<sprite=2>");
+        }
+        else if (heavyInput && !lowInput && !mediumInput && currentInput2 != "Heavy")
+        {
+            CurrentInputLogic2( "Heavy", "<sprite=4>");
+        }
+        else if (shadowInput && currentInput2 != "Shadow")
+        {
+            CurrentInputLogic2("Shadow", "<sprite=12>");
+        }
+        else if (powerInput && currentInput2 != "Power")
+        {
+            CurrentInputLogic2("Power", "<sprite=14>");
+        }
+        else if (BlockInput && currentInput2 != "Block")
+        {
+            CurrentInputLogic2("Block", "<sprite=15>");
+        }
 
+        else if (directionInput.x == 0 && directionInput.y == 0 && !lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && currentInput2 != "")
+        {
+            CurrentInputLogic2("", "");
         }
 
     }
 
-        #region GetInputs (Callback)
+    public void CurrentInputLogic(string setCurrentInput, string setCurrentSpriteInput)
+    {
+        countInput = 0;
+
+        if (countInput == 0)
+        {
+
+            for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+            {
+                currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+            }
+        }
+
+        currentInput = setCurrentInput;
+        currentSpriteInput = setCurrentSpriteInput;
+    }
+
+    public void CurrentInputLogic2(string setCurrentInput, string setCurrentSpriteInput)
+    {
+        countInput = 0;
+
+        if (countInput == 0)
+        {
+
+            for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
+            {
+                currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
+            }
+        }
+
+        currentInput2 = setCurrentInput;
+        currentSpriteInput2 = setCurrentSpriteInput;
+    }
+
+    #region GetInputs (Callback)
 
     public void GetDirectionInput(InputAction.CallbackContext callbackContext)
     {

@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour
     {
         moveControl.DashLogic();
         moveControl.JumpLogic();
-        combatControl.AttackLogic();
+        //combatControl.AttackLogic();
         animationsControl.FlipLogic();
         animationsControl.AnimationsLogic();
     }
