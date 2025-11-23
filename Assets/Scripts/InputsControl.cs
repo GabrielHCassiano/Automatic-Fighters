@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.LookDev;
 using UnityEngine.Rendering.UI;
 using UnityEngine.U2D;
 
@@ -18,11 +20,15 @@ public class InputsControl : MonoBehaviour
     private bool inMultipleInputs, inBlackAndWhite;
 
     private CurrentInputs currentInputs;
-    private string currentInput = "";
-    private string currentSpriteInput = "";
-    private string currentInput2 = "";
-    private string currentSpriteInput2 = "";
+    private string current_InputMotion = "";
+    private string sprite_InputMotion = "<sprite=13>";
+    private string current_InputAction = "";
+    private string sprite_InputAction = "";
     private int countInput = 0;
+
+    private int current_State = 0;
+    private string current_MotionAction;
+    private string state_MotionAction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,302 +39,782 @@ public class InputsControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputCurrent();
+        //InputCurrent();
+        //StateMotionAction();
     }
 
-    public void InputCurrent()
+    private void FixedUpdate()
     {
-        /*if (Input.GetKeyDown(KeyCode.C))
-        {
-            print("ok");
-            for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-            {
-                print("ok " + i);
-                currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-            }
-        }*/
+        CurrentInputs();
+        StateMotionAction();
+    }
 
-        if (countInput <= 20)
+    private void LateUpdate()
+    {
+        //StateMotionAction();
+    }
+
+    public void CurrentInputs()
+    {
+        if (countInput <= 99)
         {
-            currentInputs.InputCurrent[0] = currentSpriteInput + currentSpriteInput2 + "\t\t" + countInput;
+            currentInputs.InputCurrent[0] = sprite_InputMotion + sprite_InputAction + "\t\t" + countInput;
 
             countInput++;
         }
 
-        if (directionInput.y > 0 && directionInput.x < 0 && currentInput != "UpLeft")
-        {
-            CurrentInputLogic("UpLeft", "<sprite=16>");
-        }
-        else if (directionInput.y > 0 && directionInput.x > 0 && currentInput != "UpRight")
-        {
-            CurrentInputLogic("UpRight", "<sprite=17>");
-        }
-        else if (directionInput.y < 0 && directionInput.x < 0 && currentInput != "DownLeft")
-        {
-            CurrentInputLogic("DownLeft", "<sprite=18>");
-        }
-        else if (directionInput.y < 0 && directionInput.x > 0 && currentInput != "DownRight")
-        {
-            CurrentInputLogic("DownRight", "<sprite=19>");
-        }
-        else if (directionInput.y > 0 && directionInput.x == 0 && currentInput != "Up")
-        {
-            CurrentInputLogic("Up", "<sprite=24>");
-        }
-        else if (directionInput.y < 0 && directionInput.x == 0 && currentInput != "Down")
-        {
-            CurrentInputLogic("Down", "<sprite=25>");
-        }
-        else if (directionInput.x < 0 && directionInput.y == 0 && currentInput != "Left")
-        {
-            CurrentInputLogic("Left", "<sprite=26>");
-        }
-        else if (directionInput.x > 0 && directionInput.y == 0 && currentInput != "Right")
-        {
-            CurrentInputLogic("Right", "<sprite=27>");
-        }
-        /*else if (lowInput && mediumInput && heavyInput && currentInput != "BlackAndWhite")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "BlackAndWhite";
-            currentSpriteInput = "<sprite=13>";
-        }
-        else if (!lowInput && mediumInput && heavyInput && currentInput != "Cyan")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Cyan";
-            currentSpriteInput = "<sprite=6>";
-        }
-        else if (lowInput && !mediumInput && heavyInput && currentInput != "Magenta")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Magenta";
-            currentSpriteInput = "<sprite=8>";
-        }
-        else if (lowInput && mediumInput && !heavyInput && currentInput != "Yellow")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Yellow";
-            currentSpriteInput = "<sprite=10>";
-        }
-        else if (lowInput && !mediumInput && !heavyInput && currentInput != "Low")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Low";
-            currentSpriteInput = "<sprite=0>";
-        }
-        else if (mediumInput && !lowInput && !heavyInput && currentInput != "Medium")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Medium";
-            currentSpriteInput = "<sprite=2>";
-        }
-        else if (heavyInput && !lowInput && !mediumInput && currentInput != "Heavy")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Heavy";
-            currentSpriteInput = "<sprite=4>";
-        }
-        else if (shadowInput && currentInput != "Shadow")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Shadow";
-            currentSpriteInput = "<sprite=12>";
-        }
-        else if (powerInput && currentInput != "Power")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Power";
-            currentSpriteInput = "<sprite=14>";
-        }
-        else if (BlockInput && currentInput != "Block")
-        {
-            countInput = 0;
-
-            if (countInput == 0)
-            {
-                for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
-                {
-                    currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
-                }
-            }
-
-            currentInput = "Block";
-            currentSpriteInput = "<sprite=15>";
-        }
-        */
-        else if (directionInput.x == 0 && directionInput.y == 0 && !lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && currentInput != "")
-        {
-            CurrentInputLogic("", "");
-        }
-
-        test2();
+        CurrentInputsMotion();
+        CurrentInputsAction();
 
     }
 
-    public void test2()
+    public void CurrentInputsMotion()
     {
-        if (lowInput && mediumInput && heavyInput && currentInput2 != "BlackAndWhite")
+        if (directionInput.y > 0 && directionInput.x < 0 && current_InputMotion != "up_back")
         {
-            CurrentInputLogic2("BlackAndWhite", "<sprite=13");
+            SetCurrentInputsMotion("up_back", "<sprite=16>");
         }
-        else if (!lowInput && mediumInput && heavyInput && currentInput2 != "Cyan")
+        else if (directionInput.y > 0 && directionInput.x > 0 && current_InputMotion != "up_front")
         {
-            CurrentInputLogic2("Cyan", "<sprite=6>");
+            SetCurrentInputsMotion("up_front", "<sprite=17>");
         }
-        else if (lowInput && !mediumInput && heavyInput && currentInput2 != "Magenta")
+        else if (directionInput.y < 0 && directionInput.x < 0 && current_InputMotion != "down_back")
         {
-            CurrentInputLogic2("Magenta", "<sprite=8>");
+            SetCurrentInputsMotion("down_back", "<sprite=18>");
         }
-        else if (lowInput && mediumInput && !heavyInput && currentInput2 != "Yellow")
+        else if (directionInput.y < 0 && directionInput.x > 0 && current_InputMotion != "down_front")
         {
-            CurrentInputLogic2("Yellow", "<sprite=10>");
+            SetCurrentInputsMotion("down_front", "<sprite=19>");
         }
-        else if (lowInput && !mediumInput && !heavyInput && currentInput2 != "Low")
+        else if (directionInput.y > 0 && directionInput.x == 0 && current_InputMotion != "up")
         {
-            CurrentInputLogic2("Low", "<sprite=0>");
+            SetCurrentInputsMotion("up", "<sprite=24>");
         }
-        else if (mediumInput && !lowInput && !heavyInput && currentInput2 != "Medium")
+        else if (directionInput.y < 0 && directionInput.x == 0 && current_InputMotion != "down")
         {
-            CurrentInputLogic2("Medium", "<sprite=2>");
+            SetCurrentInputsMotion("down", "<sprite=25>");
         }
-        else if (heavyInput && !lowInput && !mediumInput && currentInput2 != "Heavy")
+        else if (directionInput.x < 0 && directionInput.y == 0 && current_InputMotion != "back")
         {
-            CurrentInputLogic2( "Heavy", "<sprite=4>");
+            SetCurrentInputsMotion("back", "<sprite=26>");
         }
-        else if (shadowInput && currentInput2 != "Shadow")
+        else if (directionInput.x > 0 && directionInput.y == 0 && current_InputMotion != "front")
         {
-            CurrentInputLogic2("Shadow", "<sprite=12>");
+            SetCurrentInputsMotion("front", "<sprite=27>");
         }
-        else if (powerInput && currentInput2 != "Power")
+        else if (directionInput.x == 0 && directionInput.y == 0 && current_InputMotion != "")
         {
-            CurrentInputLogic2("Power", "<sprite=14>");
+            SetCurrentInputsMotion("", "<sprite=13>");
         }
-        else if (BlockInput && currentInput2 != "Block")
-        {
-            CurrentInputLogic2("Block", "<sprite=15>");
-        }
+    }
 
-        else if (directionInput.x == 0 && directionInput.y == 0 && !lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && currentInput2 != "")
+    public void CurrentInputsAction()
+    {
+        if (lowInput && mediumInput && heavyInput && current_InputAction != "black")
         {
-            CurrentInputLogic2("", "");
+            SetCurrentInputsAction("black", "<sprite=12");
+        }
+        else if (!lowInput && mediumInput && heavyInput && current_InputAction != "cyan")
+        {
+            SetCurrentInputsAction("cyan", "<sprite=6>");
+        }
+        else if (lowInput && !mediumInput && heavyInput && current_InputAction != "magenta")
+        {
+            SetCurrentInputsAction("magenta", "<sprite=8>");
+        }
+        else if (lowInput && mediumInput && !heavyInput && current_InputAction != "throw")
+        {
+            SetCurrentInputsAction("throw", "<sprite=10>");
+        }
+        else if (lowInput && !mediumInput && !heavyInput && current_InputAction != "low")
+        {
+            SetCurrentInputsAction("low", "<sprite=0>");
+        }
+        else if (mediumInput && !lowInput && !heavyInput && current_InputAction != "medium")
+        {
+            SetCurrentInputsAction("medium", "<sprite=2>");
+        }
+        else if (heavyInput && !lowInput && !mediumInput && current_InputAction != "heavy")
+        {
+            SetCurrentInputsAction( "heavy", "<sprite=4>");
+        }
+        /*else if (shadowInput && current_InputAction != "Shadow")
+        {
+            SetCurrentInputsAction("Shadow", "<sprite=12>");
+        }
+        else if (powerInput && current_InputAction != "Power")
+        {
+            SetCurrentInputsAction("Power", "<sprite=14>");
+        }
+        else if (BlockInput && current_InputAction != "Block")
+        {
+            SetCurrentInputsAction("Block", "<sprite=15>");
+        }*/
+        else if (!lowInput && !mediumInput && !heavyInput && !shadowInput && !powerInput && !BlockInput && current_InputAction != "")
+        {
+            SetCurrentInputsAction("", "");
         }
 
     }
 
-    public void CurrentInputLogic(string setCurrentInput, string setCurrentSpriteInput)
+    public void SetCurrentInputsMotion(string setCurrentInput, string setCurrentSpriteInput)
     {
-        countInput = 0;
+        countInput = 1;
 
-        if (countInput == 0)
+        if (countInput == 1)
         {
-
             for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
             {
                 currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
             }
         }
 
-        currentInput = setCurrentInput;
-        currentSpriteInput = setCurrentSpriteInput;
+        current_MotionAction = setCurrentInput;
+        current_InputMotion = setCurrentInput;
+        sprite_InputMotion = setCurrentSpriteInput;
     }
 
-    public void CurrentInputLogic2(string setCurrentInput, string setCurrentSpriteInput)
+    public void SetCurrentInputsAction(string setCurrentInput, string setCurrentSpriteInput)
     {
-        countInput = 0;
+        countInput = 1;
 
-        if (countInput == 0)
+        if (countInput == 1)
         {
-
             for (int i = currentInputs.InputCurrent.Length - 1; i > 0; i--)
             {
                 currentInputs.InputCurrent[i] = currentInputs.InputCurrent[i - 1];
             }
         }
 
-        currentInput2 = setCurrentInput;
-        currentSpriteInput2 = setCurrentSpriteInput;
+        current_MotionAction = setCurrentInput;
+        current_InputAction = setCurrentInput;
+        sprite_InputAction = setCurrentSpriteInput;
+    }
+
+    public void StateMotionAction()
+    {
+        switch(current_State)
+        {
+            case 0:
+
+                if (current_MotionAction == "" && countInput > 5)
+                {
+                    current_State = 0;
+                }
+                else if (current_MotionAction == "up_left")
+                {
+                    print("Back Jump");
+                    state_MotionAction = "Back Jump";
+                    current_MotionAction = "";
+                    current_State = 1;
+                }
+                else if (current_MotionAction == "up_right")
+                {
+                    print("Front Jump");
+                    state_MotionAction = "Front Jump";
+                    current_MotionAction = "";
+                    current_State = 2;
+                }
+                else if (current_MotionAction == "up")
+                {
+                    print("Jump");
+                    state_MotionAction = "Jump";
+                    current_MotionAction = "";
+                    current_State = 3;
+                }
+                else if (current_MotionAction == "down_left")
+                {
+                    print("Crouched");
+                    state_MotionAction = "Crouched";
+                    current_MotionAction = "";
+                    current_State = 4;
+                }
+                else if (current_MotionAction == "down_right")
+                {
+                    print("Crouched");
+                    state_MotionAction = "Crouched";
+                    current_MotionAction = "";
+                    current_State = 5;
+                }
+                else if (current_MotionAction == "down")
+                {
+                    print("Crouched");
+                    state_MotionAction = "Crouched";
+                    current_MotionAction = "";
+                    current_State = 6;
+                }
+                else if (current_MotionAction == "back")
+                {
+                    print("Move Back");
+                    state_MotionAction = "Move Back";
+                    current_MotionAction = "";
+                    current_State = 7;
+                }
+                else if (current_MotionAction == "front")
+                {
+                    print("Move Front");
+                    state_MotionAction = "Move Front";
+                    current_MotionAction = "";
+                    current_State = 8;
+                }
+                else if (current_MotionAction == "low")
+                {
+                    print("Attack Low");
+                    state_MotionAction = "Attack Low";
+                    current_MotionAction = "";
+                    current_State = 9;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 10;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 11;
+                }
+                else if (current_MotionAction == "throw")
+                {
+                    current_State = 12;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 1:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 13;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 14;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 15;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 2:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 13;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 14;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 15;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 3:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 13;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 14;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 15;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 4:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 16;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 17;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 18;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 5:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 16;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 17;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 18;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 6:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 16;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 17;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 18;
+                }
+                else if (current_MotionAction == "down_front")
+                {
+                    current_State = 19;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 7:
+
+                if (current_MotionAction == "back")
+                {
+                    current_State = 20;
+                }
+                else if (current_MotionAction == "throw")
+                {
+                    current_State = 21;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 22;
+                }
+                else if (current_MotionAction == "front")
+                {
+                    current_State = 23;
+                }
+                else if (current_MotionAction == "down_back")
+                {
+                    current_State = 24;
+                }
+                else if (current_MotionAction == "low")
+                {
+                    print("Attack Low");
+                    state_MotionAction = "Attack Low";
+                    current_MotionAction = "";
+                    current_State = 9;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 11;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 8:
+
+                if (current_MotionAction == "front")
+                {
+                    current_State = 26;
+                }
+                else if (current_MotionAction == "low")
+                {
+                    print("Attack Low");
+                    state_MotionAction = "Attack Low";
+                    current_MotionAction = "";
+                    current_State = 9;
+                }
+                else if (current_MotionAction == "medium")
+                {
+                    current_State = 10;
+                }
+                else if (current_MotionAction == "throw")
+                {
+                    current_State = 12;
+                }
+                else if (current_MotionAction == "heavy")
+                {
+                    current_State = 27;
+                }
+                else if (current_MotionAction == "down_front")
+                {
+                    current_State = 28;
+                }
+                else if (current_MotionAction == "down")
+                {
+                    current_State = 29;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 9:
+
+                if (current_MotionAction == "low")
+                {
+                    current_State = 25;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 10:
+                print("Attack Medium");
+                state_MotionAction = "Attack Medium";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 11:
+                print("Attack Heavy");
+                state_MotionAction = "Attack Heavy";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 12:
+                print("Throw");
+                state_MotionAction = "Throw";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 13:
+                print("Jump Attack Low");
+                state_MotionAction = "Jump Attack Low";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 14:
+                print("Jump Attack Medium");
+                state_MotionAction = "Jump Attack Medium";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 15:
+                print("Jump Attack Heavy");
+                state_MotionAction = "Jump Attack Heavy";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 16:
+                print("Crouched Attack Low");
+                state_MotionAction = "Crouched Attack Low";
+                current_MotionAction = "";
+                current_State = 4;
+
+                break;
+            case 17:
+                print("Crouched Attack Medium");
+                state_MotionAction = "Crouched Attack Medium";
+                current_MotionAction = "";
+                current_State = 4;
+
+                break;
+            case 18:
+                print("Crouched Attack Heavy");
+                state_MotionAction = "Crouched Attack Heavy";
+                current_MotionAction = "";
+                current_State = 4;
+
+                break;
+            case 19:
+
+                if (current_MotionAction == "front")
+                {
+                    current_State = 30;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 20:
+                print("Back Dash");
+                state_MotionAction = "Back Dash";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 21:
+                print("Back Throw");
+                state_MotionAction = "Back Throw";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 22:
+                print("Attack Medium 2");
+                state_MotionAction = "Attack Medium 2";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 23:
+
+                if (current_MotionAction == "medium")
+                {
+                    current_State = 31;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 24:
+
+                if (current_MotionAction == "down")
+                {
+                    current_State = 32;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 25:
+                print("Sequence Attack Low");
+                state_MotionAction = "Sequence Attack Low";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 26:
+                print("Front Dash");
+                state_MotionAction = "Front Dash";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 27:
+                print("Attack Heavy 2");
+                state_MotionAction = "Attack Heavy 2";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 28:
+
+                if (current_MotionAction == "down")
+                {
+                    current_State = 29;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 29:
+
+                if (current_MotionAction == "down_front")
+                {
+                    current_State = 33;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 30:
+
+                if (current_MotionAction == "low" || current_MotionAction == "medium" || current_MotionAction == "heavy")
+                {
+                    current_State = 34;
+                }
+                else if (current_MotionAction == "down")
+                {
+                    current_State = 35;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 31:
+                print("Special Attack 1");
+                state_MotionAction = "Special Attack 1";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 32:
+
+                if (current_MotionAction == "down_front")
+                {
+                    current_State = 36;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 33:
+
+                if (current_MotionAction == "front")
+                {
+                    current_State = 37;
+                }
+                else if (current_MotionAction == "low" || current_MotionAction == "medium" || current_MotionAction == "heavy")
+                {
+                    current_State = 38;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 34:
+                print("Special Attack 2");
+                state_MotionAction = "Special Attack 2";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 35:
+
+                if (current_MotionAction == "down_front")
+                {
+                    current_State = 39;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 36:
+
+                if (current_MotionAction == "front")
+                {
+                    current_State = 40;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 37:
+
+                if (current_MotionAction == "low" || current_MotionAction == "medium" || current_MotionAction == "heavy")
+                {
+                    current_State = 38;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 38:
+                print("Special Attack 4");
+                state_MotionAction = "Special Attack 4";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 39:
+
+                if (current_MotionAction == "front")
+                {
+                    current_State = 41;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 40:
+
+                if (current_MotionAction == "low" || current_MotionAction == "medium" || current_MotionAction == "heavy")
+                {
+                    current_State = 42;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 41:
+
+                if (current_MotionAction == "low" || current_MotionAction == "medium" || current_MotionAction == "heavy")
+                {
+                    current_State = 43;
+                }
+                else if (countInput > 5)
+                {
+                    current_State = 0;
+                }
+
+                break;
+            case 42:
+                print("Special Attack 3");
+                state_MotionAction = "Special Attack 3";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+            case 43:
+
+                print("Super");
+                state_MotionAction = "Super";
+                current_MotionAction = "";
+                current_State = 0;
+
+                break;
+
+        }
     }
 
     #region GetInputs (Callback)
@@ -336,19 +822,6 @@ public class InputsControl : MonoBehaviour
     public void GetDirectionInput(InputAction.CallbackContext callbackContext)
     {
         directionInput = callbackContext.ReadValue<Vector2>();
-
-        if (directionInput == Vector2.zero)
-        {
-            canDirectionUpLeft = true;
-            canDirectionUpRight = true;
-            canDirectionDownLeft = true;
-            canDirectionDownRight = true;
-            canDirectionUp = true;
-            canDirectionDown = true;
-            canDirectionLeft = true;
-            canDirectionRight = true;
-
-        }
     }
     /*public void GetRedInput(InputAction.CallbackContext callbackContext)
     {
@@ -490,6 +963,24 @@ public class InputsControl : MonoBehaviour
     {
         get { return blockInput; }
         set { blockInput = value; }
+    }
+
+    public string Current_InputMotion
+    {
+        get { return current_InputMotion; }
+        set { current_InputMotion = value; }
+    }
+
+    public string Current_InputAction
+    {
+        get { return current_InputAction; }
+        set { current_InputAction = value; }
+    }
+
+    public string State_MotionAction
+    {
+        get { return state_MotionAction; }
+        set { state_MotionAction = value; }
     }
 
     #endregion
